@@ -1,0 +1,22 @@
+---
+version: '3.3'
+
+services:
+  ghost:
+    image: ghost:4-alpine
+    restart: always
+    ports:
+      - 8080: 2368
+    environment:
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password: $MYSQL_ROOT_PASSWORD
+      database__connection__database: ghost
+      url: $APP_URL
+
+  db:
+    image: mysql:$MYSQL_VERSION
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
